@@ -98,7 +98,10 @@ def Repeater():
                 res = f'{res}{key}：{value}\n'
         res = res.strip('\n')
         return res if res else self.getReply('throw_failed')
-
+    @bot.onCommand(r'help')
+    async def getHelp(self):    
+        ans=Bot.REPLY['help'][0]
+        return ans 
     @bot.onCommand(r'(([A-Za-z]{2}|)\d{3})是什么')
     async def replyCourseInfo(self):
         tmp_reg = re.search(r'(([A-Za-z]{2}|)\d{3})是什么', self.msg)
@@ -126,7 +129,6 @@ def Repeater():
     @bot.onCommand(r'查([\s\S]{1,})|([\s\S]{1,})是谁')
    
     async def replyContacts(self): 
-        print("1234y")
         tmp_reg = re.search(
             r'查([\s\S]{1,})|([\s\S]{1,})是谁', self.msg.lstrip('#').lstrip(' '))
         keyword = tmp_reg.group(1)
@@ -163,9 +165,12 @@ def Repeater():
 
     @bot.onCommand(r'第几周')
     async def replyWeek(self):
-        d1 = datetime.now()
-        d2 = datetime(2020, 5, 11)
-        return f"今天 {d1.strftime('%m / %d')} 第 {(d1 - d2).days // 7 + 1} 周"
+        print(2)
+        d1 = datetime.datetime.now()
+        print(1)
+        d2 = datetime.datetime(2021, 9, 1)
+        print(d2)
+        return f"今天 {d1.strftime('%m / %d')} 第 {(d1 - d2).days // 7 + 1} 周 (从20210901计算)"
 
     @bot.onCommand(r'猫图|猫猫')
     async def replyKitty(self):

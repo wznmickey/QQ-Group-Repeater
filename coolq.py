@@ -10,8 +10,8 @@ from datetime import datetime, timezone,timedelta
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 from queue import Queue
-# from pytz import timezone
-# used_timezone=timezone('Asia/Shanghai')
+from pytz import timezone
+used_timezone=timezone('Asia/Shanghai')
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
@@ -56,15 +56,20 @@ async def handle_private(context):
 
 @bot.on_message('group')
 async def handle_msg(context):
+    
     groupId = context['group_id']
-    if groupId in SETTINGS['DANMU_GROUP']:
-        msgQueue.put({
-            'sender': context['user_id'],
-            'msg': context['message']
-            # 'msg': purgeMsg(context['message'])
-        })
+     
+    #if groupId in SETTINGS['DANMU_GROUP']:
+    #    msgQueue.put({
+    #        'sender': context['user_id'],
+    #        'msg': context['message']
+    #        # 'msg': purgeMsg(context['message'])
+    #    })
+    
     if groupId not in SETTINGS['ALLOW_GROUP']:
+        
         return
+   
     global GroupDict
     try:
         if (GroupDict.get(groupId) == None):
@@ -91,13 +96,14 @@ async def handle_group_request(context):
 
 
 async def send_early_msg():
-    await asyncio.sleep(int(random.random() * 0) + 5)
-    #time_format = '%Y-%m-%d %H:%M:%S'
-    #show_datetime = datetime.now(used_timezone)
-    #string_datetime = show_datetime.strftime(time_format)
+    #await asyncio.sleep(int(random.random() * 0) + 5)
+    time_format = '%Y-%m-%d %H:%M:%S'
+    show_datetime = datetime.now(used_timezone)
+    string_datetime = show_datetime.strftime(time_format)
     re = random.choice(REPLY['on_early'])
+    print(string_datetime)
     for group_id in SETTINGS['MEMTION_GROUP']:
-        await bot.send({'group_id': group_id}, message=(re))#+string_datetime))
+        await bot.send({'group_id': group_id}, message=(re+'当前世界'+string_datetime))
 
 
 async def send_new_day_msg():
@@ -108,12 +114,12 @@ async def send_new_day_msg():
 
 def sche():
     scheduler = AsyncIOScheduler()
-    # scheduler.add_job(send_early_msg, 'cron', hour='7', minute='50',timezone=used_timezone)
-    scheduler.add_job(send_new_day_msg, 'cron', hour='0', minute='0')#,timezone=used_timezone)
-    scheduler.add_job(send_early_msg, 'cron', hour='23', minute='55')
+    scheduler.add_job(send_early_msg, 'cron', hour='07', minute='45' ,timezone=used_timezone) 
+    scheduler.add_job(send_new_day_msg, 'cron', hour='00', minute='00',timezone=used_timezone)
     scheduler.start()
 
 
 if __name__ == '__main__':
-    sche()
+    sche() 
     bot.run(host='0.0.0.0', port=8090)
+    

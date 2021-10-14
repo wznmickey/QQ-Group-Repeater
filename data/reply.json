@@ -1,8 +1,8 @@
 {
-    "on_call_help":["帮助:待完善"],
+    "help":["输入#指示我,help看我,查xxx查老师,xxx教什么查课程,更多功能可以自行摸索(指我的主人还没给我):"],
     "on_group_increase": ["群成员++"],
     "on_new_day": ["到新的一天了"],
-    "on_early": ["早上好"],
+    "on_early": ["早八准备"],
     "switch_on_successful": ["我的开启速度超过了99%的机器人呢,主人。"],
     "switch_on_already": ["主人,我之前的工作你没有看到吗?"],
     "switch_on_failed": ["你让我开我就开岂不是很没有面子。"],
