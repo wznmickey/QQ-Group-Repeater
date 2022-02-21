@@ -141,7 +141,7 @@ def Repeater():
         else: 
             for item in Bot.CONTACTS:
                 if keyword in item['name'].lower() or keyword in ''.join([word[0] for word in item['name'].lower().split() if word]):
-                    res += f"姓名：{item['name']}\n职称：{item['title']}\n办公室：{item['office']}\n电话：{item['tel']}\n邮箱：{item['email']}\n介绍:{item['selfIntrUrl']}\n照片：[CQ:image,file={item['imageUrl']}]\n\n"
+                    res += f"姓名：{item['name']}\n信息：{item['selfIntrUrl']}\n照片：[CQ:image,file={item['imageUrl']}]\n\n"
         return res.strip() if res else self.getReply("contacts_failed")
 
     @bot.onCommand(r'([\s\S]{1,})教什么')

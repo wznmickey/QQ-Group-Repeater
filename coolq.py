@@ -96,19 +96,22 @@ async def handle_group_request(context):
 
 
 async def send_early_msg():
-    #await asyncio.sleep(int(random.random() * 0) + 5)
-    time_format = '%Y-%m-%d %H:%M:%S'
-    show_datetime = datetime.now(used_timezone)
-    string_datetime = show_datetime.strftime(time_format)
-    re = random.choice(REPLY['on_early'])
+    #await 
+    time.sleep(int(random.random() * 0) + 15)
     print(string_datetime)
     for group_id in SETTINGS['MEMTION_GROUP']:
-        await bot.send({'group_id': group_id}, message=(re+'当前世界'+string_datetime))
+        time.sleep(int(random.random() * 0) + 15)
+        time_format = '%Y-%m-%d %H:%M:%S'
+        show_datetime = datetime.now(used_timezone)
+        string_datetime = show_datetime.strftime(time_format)
+        re = random.choice(REPLY['on_early'])
+        await bot.send({'group_id': group_id}, message=(re+'当前时间为'+string_datetime))
 
 
 async def send_new_day_msg():
     for group_id in SETTINGS['MEMTION_GROUP']:
         re = random.choice(REPLY['on_new_day'])
+        time.sleep(int(random.random() * 0) + 15)
         await bot.send({'group_id': group_id}, message=re)
 
 
